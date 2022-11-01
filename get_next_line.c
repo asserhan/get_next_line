@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:40:52 by hasserao          #+#    #+#             */
-/*   Updated: 2022/11/01 21:28:56 by hasserao         ###   ########.fr       */
+/*   Updated: 2022/11/01 23:55:18 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,17 +120,3 @@ char	*get_next_line(int fd)
 	line = extract(&reserve);
 	return (line);
 }
-// #include<stdio.h>
-// #include<fcntl.h>
-// #include<stdlib.h>
-// int main()
-// {
-// 	int fd;
-// 	fd = open("test.txt",O_RDONLY);
-// 	if (!fd)
-// 		return(-1);
-// 	char *s;
-// 	s = get_next_line(fd);
-// 	printf("%s",s);
-// 	free(s);
-// }
