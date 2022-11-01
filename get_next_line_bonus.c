@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 10:40:52 by hasserao          #+#    #+#             */
-/*   Updated: 2022/11/01 21:28:56 by hasserao         ###   ########.fr       */
+/*   Created: 2022/11/01 01:56:29 by hasserao          #+#    #+#             */
+/*   Updated: 2022/11/01 19:25:13 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strdup(const char *s1)
 {
@@ -109,28 +109,14 @@ char	*extract(char **reserve)
 
 char	*get_next_line(int fd)
 {
-	static char	*reserve;
+	static char	*reserve[OPEN_MAX];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	reserve = read_and_add(fd, reserve);
-	if (reserve == NULL)
+	reserve[fd] = read_and_add(fd, reserve[fd]);
+	if (reserve[fd] == NULL)
 		return (NULL);
-	line = extract(&reserve);
+	line = extract(&reserve[fd]);
 	return (line);
 }
-// #include<stdio.h>
-// #include<fcntl.h>
-// #include<stdlib.h>
-// int main()
-// {
-// 	int fd;
-// 	fd = open("test.txt",O_RDONLY);
-// 	if (!fd)
-// 		return(-1);
-// 	char *s;
-// 	s = get_next_line(fd);
-// 	printf("%s",s);
-// 	free(s);
-// }
