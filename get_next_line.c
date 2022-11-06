@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:40:52 by hasserao          #+#    #+#             */
-/*   Updated: 2022/11/06 11:03:41 by hasserao         ###   ########.fr       */
+/*   Updated: 2022/11/06 15:18:52 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*read_and_add(int fd, char *reserve)
 	{
 		read_line = read(fd, buff, BUFFER_SIZE);
 		if ((reserve == NULL && read_line == 0) || read_line == -1)
-			return (free (buff), NULL);
+			return (free (buff), free(reserve), NULL);
 		buff[read_line] = '\0';
 		if (!reserve)
 			reserve = ft_strdup("");
