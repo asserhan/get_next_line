@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 15:49:26 by hasserao          #+#    #+#             */
-/*   Updated: 2022/11/01 02:11:37 by hasserao         ###   ########.fr       */
+/*   Updated: 2022/11/05 15:54:50 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	len = ft_strlen(s1) + ft_strlen(s2);
-	p = (char *)malloc(len + 1 * sizeof(char));
+	p = (char *)malloc((len + 1) * sizeof(char));
 	if (!p)
 		return (NULL);
 	else

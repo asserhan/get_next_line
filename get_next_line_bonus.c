@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 01:56:29 by hasserao          #+#    #+#             */
-/*   Updated: 2022/11/01 19:25:13 by hasserao         ###   ########.fr       */
+/*   Updated: 2022/11/06 11:25:44 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s1)
 	size_t	size ;
 	size_t	i;
 
+	if (!s1)
+		return (NULL);
 	i = 0;
 	size = ft_strlen(s1) + 1;
 	p = (char *)malloc (size * sizeof(char));
@@ -41,7 +43,7 @@ char	*read_and_add(int fd, char *reserve)
 	ssize_t	read_line ;
 
 	read_line = 1;
-	buff = malloc (sizeof(char) * BUFFER_SIZE + 1);
+	buff = (char *)malloc (sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buff)
 		return (NULL);
 	while (read_line != 0)
@@ -62,13 +64,14 @@ char	*read_and_add(int fd, char *reserve)
 	return (reserve);
 }
 
-char	*update_reserve(char **reserve, int j, int i)
+char	*update_reserve(char **reserve, int i)
 {
 	char	*tmp;
+	int		j;
 
-	tmp = malloc (sizeof (char) * ft_strlen(*reserve) - j);
+	tmp = (char *)malloc (sizeof (char) * (ft_strlen(*reserve) - i + 1));
 	if (!tmp)
-		return (NULL);
+		return (free(*reserve), NULL);
 	j = 0;
 	while ((*reserve)[i])
 		tmp[j++] = (*reserve)[i++];
@@ -93,7 +96,9 @@ char	*extract(char **reserve)
 		return (NULL);
 	while ((*reserve)[i] && (*reserve)[i] != '\n')
 			i++;
-	line = malloc (sizeof(char) * (i + 2));
+	if ((*reserve)[i] == '\n')
+		i++;
+	line = (char *)malloc (sizeof(char) * (i + 1));
 	if (line == NULL)
 		return (NULL);
 	i = 0;
@@ -103,7 +108,7 @@ char	*extract(char **reserve)
 	if ((*reserve)[i] == '\n')
 		line[j++] = (*reserve)[i++];
 	line[j] = '\0';
-	*reserve = update_reserve(reserve, j, i);
+	*reserve = update_reserve(reserve, i);
 	return (line);
 }
 
@@ -112,9 +117,10 @@ char	*get_next_line(int fd)
 	static char	*reserve[OPEN_MAX];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= OPEN_MAX || BUFFER_SIZE <= 0)
 		return (NULL);
-	reserve[fd] = read_and_add(fd, reserve[fd]);
+	if (!reserve[fd] || !ft_strchr(reserve[fd], '\n'))
+		reserve[fd] = read_and_add(fd, reserve[fd]);
 	if (reserve[fd] == NULL)
 		return (NULL);
 	line = extract(&reserve[fd]);
